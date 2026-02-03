@@ -10,6 +10,7 @@ class Student(Base):
     name = Column(String, nullable=False) # Student name | John Smith
     grade_level = Column(Integer, nullable=False) # Grade Level | 5
     subjects = Column(String, nullable=False) # Subjects | Math, English
+    curriculum = Column(String)
 
     sessions = relationship("Session", back_populates="student") 
     lesson_plans = relationship("LessonPlan", back_populates="student")
