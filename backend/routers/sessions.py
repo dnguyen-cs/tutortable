@@ -15,11 +15,13 @@ def log_session(session: schemas.SessionCreate, db: Session = Depends(get_db)):
     if student is None:
         raise HTTPException(status_code=404, detail="Student not found")
     
+    # Create new session
     db_session = models.Session(
+        student_id=session.student_id,
         topics_covered=session.topics_covered,
-        mastery_score=session.mastery_score,
+        metrics=session.metrics,
+        question_set=session.question_set,
         notes=session.notes,
-        student_id=session.student_id
     )
 
     db.add(db_session)

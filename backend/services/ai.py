@@ -26,10 +26,10 @@ def generate_practice_questions(student, topic_input, mode, num_questions):
     )
     print(response.text)
 
-temp_student = Student(
-    id=1,
-    name="Test Student",
-    grade_level="5th Grade",
-    interests=["soccer", "video games", "space"]
-)
-generate_practice_questions(temp_student, "Multiplying Fractions", "Practice", 5)
+# temp_student = Student(
+#     id=1,
+#     name="Test Student",
+#     grade_level="5th Grade",
+#     interests=["soccer", "video games", "space"]
+# )
+# generate_practice_questions(temp_student, "Multiplying Fractions", "Practice", 5)
