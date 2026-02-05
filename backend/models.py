@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Text, Float
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Text, Float, JSON, Boolean
 from sqlalchemy.orm import relationship, declarative_base
 from datetime import datetime
 
@@ -7,50 +7,38 @@ Base = declarative_base()
 class Student(Base):
     __tablename__ = "students"
     id = Column(Integer, primary_key=True, index=True)
+
     name = Column(String, nullable=False) # Student name | John Smith
     grade_level = Column(Integer, nullable=False) # Grade Level | 5
-    subjects = Column(String, nullable=False) # Subjects | Math, English
-    curriculum = Column(String)
+    mastery_scores = Column(JSON, default=dict) # Mastery Scores | {"Fractions": 0.8, "Decimals": 0.6}
+    interests = Column(JSON, default=list) # Interests | ["Gaming", "Sports", "Music"]
 
     sessions = relationship("Session", back_populates="student") 
-    lesson_plans = relationship("LessonPlan", back_populates="student")
+    exam_results = relationship("ExamResult", back_populates="student")
 
 class Session(Base):
     __tablename__ = "sessions"
     
     id = Column(Integer, primary_key=True, index=True)
+
     student_id = Column(Integer, ForeignKey("students.id"), nullable=False)
     date = Column(DateTime, default=datetime.now)
-    topics_covered = Column(String, nullable=False)
-    mastery_score = Column(Float, nullable=False)
+    topics_covered = Column(JSON, default=list) # Topics Covered | ["Fractions", "Decimals"]
+    metrics = Column(JSON) # Metrics | {"accuracy" : .80, "questions_completed": 20}
+    question_set = Column(JSON, default=list) # Question Set | [{"question_id": "1", "is_correct": True, "answer": "3/4"}]
     notes = Column(Text)
 
     student = relationship("Student", back_populates="sessions")
 
-class LessonPlan(Base):
-    __tablename__ = "lesson_plans"
-    
+class ExamResult(Base):
+    __tablename__ = "exam_results"
+
     id = Column(Integer, primary_key=True, index=True)
     student_id = Column(Integer, ForeignKey("students.id"), nullable=False)
-    date_created = Column(DateTime, default=datetime.now)
+    date_taken = Column(DateTime, default=datetime.now)
+    exam_type = Column(String, nullable=False) # "Monthly Calibration" or "Practice Test"
+    total_score = Column(Float) # Total Score | 93.5
+    regression_alerts = Column(JSON, default=list) # [{"topic": "Fractions", "previous_score": 0.8, "current_score": 0.5}]
+    question_data = Column(JSON, default=list) # [{"question_id": 1, "is_correct": False}, {"question_id": 2, "is_correct": True}]
 
-    weaknesses = Column(String) # Weaknesses | Fractions, Grammar
-    strengths = Column(String) # Strengths | Multiplication, Vocabulary
-    ai_gen_content = Column(Text) 
-
-    student = relationship("Student", back_populates="lesson_plans")
-
-class Curriculum(Base):
-    """
-    Stores the official school standards or syllabus.
-    Example: 
-    - Name: "NYS Common Core Grade 5 Math"
-    - Description: "Focuses on fractions, decimals, and volume..."
-    - File_URL: (Optional) Link to PDF on S3 if you add that later.
-    """
-    __tablename__ = "curriculums"
-    
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, nullable=False)
-    subject = Column(String, nullable=False)
-    description = Column(Text, nullable=False)
+    student = relationship("Student", back_populates="exam_results")

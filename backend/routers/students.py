@@ -27,7 +27,6 @@ def create_student(student: schemas.StudentCreate, db: Session = Depends(get_db)
         name=student.name,
         grade_level=student.grade_level,
         subjects=student.subjects,
-        curriculum=student.curriculum
     )
 
     db.add(db_student)
