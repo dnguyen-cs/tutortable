@@ -1,7 +1,6 @@
+import TutorTable from './main'
 export default function Home() {
   return (
-    <div>
-      <div>Hello World</div>
-    </div>
+    <TutorTable />
   );
 }

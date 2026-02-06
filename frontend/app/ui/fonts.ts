@@ -1,3 +1,3 @@
-import { Google_Sans_Code } from "next/font/google";
+import { Fira_Code } from "next/font/google";
 
-export const google_sans_code = Google_Sans_Code()
+export const fira_code = Fira_Code({subsets: ["latin"]})

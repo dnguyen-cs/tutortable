@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { google_sans_code } from "../../ui/fonts";
+import { fira_code } from "../../ui/fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${google_sans_code.className} antialiased`}
+        className={`${fira_code.className} antialiased`}
       >
         {children}
       </body>
