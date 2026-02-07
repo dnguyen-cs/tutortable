@@ -16,17 +16,20 @@ def read_students(skip: int=0, limit: int=100, db: Session = Depends(get_db)):
 # Create new student
 @router.post("/", response_model=schemas.StudentRead)
 def create_student(student: schemas.StudentCreate, db: Session = Depends(get_db)):
+    # Check if student with name and grade level already exists
     existing_student = db.query(models.Student).filter(
         models.Student.name == student.name, 
-        models.Student.grade_level == student.grade_level, 
-        models.Student.subjects == student.subjects).first()
+        models.Student.grade_level == student.grade_level).first()
     
     if existing_student:
         raise HTTPException(status_code=400, detail="Student already exists")
+    
+    # Create new student
     db_student = models.Student(
         name=student.name,
         grade_level=student.grade_level,
-        subjects=student.subjects,
+        mastery_scores=student.mastery_scores,
+        interests=student.interests
     )
 
     db.add(db_student)
