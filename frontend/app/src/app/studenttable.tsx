@@ -1,13 +1,18 @@
-"use client";
+'use client';
 import { Student } from '../types/student';
-const getStatusColor = (score: number) => {
-	if (score >= 90) return 'text-success dark:text-success-dark';
-	if (score >= 75) return 'text-warning dark:text-warning-dark';
-	if (score < 65) return 'text-error dark:text-error-dark';
-	return 'text-text-secondary dark:text-text-secondary-dark';
-};
 
-export default function StudentTable({students} : {students: Student[]}) {
+interface StudentTableProps {
+	students: Student[];
+}
+
+export default function StudentTable({ students }: StudentTableProps) {
+	const getStatusColor = (score: number) => {
+		if (score >= 90) return 'text-success dark:text-success-dark';
+		if (score >= 75) return 'text-warning dark:text-warning-dark';
+		if (score < 65) return 'text-error dark:text-error-dark';
+		return 'text-text-secondary dark:text-text-secondary-dark';
+	};
+
 	return (
 		<div>
 			<div className='overflow-hidden rounded-xl border border-border dark:border-border-dark shadow-sm'>

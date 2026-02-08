@@ -4,7 +4,7 @@ import { useTheme } from '../../lib/useTheme';
 import { useEffect, useState } from 'react';
 
 export default function Header() {
-	const { theme, toggleTheme } = useTheme();
+	const {theme, toggleTheme} = useTheme();
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {

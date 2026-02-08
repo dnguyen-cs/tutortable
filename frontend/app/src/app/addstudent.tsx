@@ -1,9 +1,31 @@
-import { Plus } from 'lucide-react';
-export default function AddStudent() {
+import { Plus, X } from 'lucide-react';
+import { Dispatch, SetStateAction } from 'react';
+
+interface AddStudentProps {
+	toggleForm: {
+		showForm: boolean;
+		setShowForm: Dispatch<SetStateAction<boolean>>;
+	};
+}
+
+export default function AddStudent({ toggleForm }: AddStudentProps) {
+	const { showForm, setShowForm } = toggleForm;
+
 	return (
 		<div>
-			<button className='flex items-center justify-center gap-2 bg-primary dark:bg-primary-dark text-white dark:text-background-dark px-4 py-2 rounded-lg font-medium'>
-				<Plus className='w-4 h-4' /> Add Student
+			<button
+				onClick={() => {
+					setShowForm(!showForm);
+				}}
+				className='flex items-center justify-center gap-2 bg-primary dark:bg-primary text-white dark:text-background px-4 py-2 rounded-lg font-medium'>
+				<div className={`${showForm ? 'hidden' : ''} flex items-center gap-2 align-middle`}>
+					<Plus className='w-4 h-4'/>
+					Add Student
+				</div>
+				<div className={`${!showForm ? 'hidden' : ''} flex items-center gap-2 align-middle`}>
+					<X className='w-4 h-4' />
+					Close Form
+				</div>
 			</button>
 		</div>
 	);

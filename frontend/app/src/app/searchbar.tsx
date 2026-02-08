@@ -1,8 +1,12 @@
-"use client";
-import { Dispatch, useState } from 'react';
+'use client';
+import { Dispatch, SetStateAction } from 'react';
 import { Search } from 'lucide-react';
 
-export default function SearchBar({setSearchTerm} : {setSearchTerm: Dispatch<React.SetStateAction<string>>}) {
+interface SearchBarProps {
+	setSearchTerm: Dispatch<SetStateAction<string>>;
+}
+
+export default function SearchBar({ setSearchTerm }: SearchBarProps) {
 	return (
 		<div className='relative flex-1'>
 			<Search className='absolute left-3 top-3 text-text-secondary w-4 h-4' />

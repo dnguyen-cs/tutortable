@@ -1,5 +1,4 @@
 @import 'tailwindcss';
-
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
@@ -14,30 +13,36 @@
 	--warning: hsl(38 92% 50%);
 	--error: hsl(0 84% 60%);
 	--success: hsl(142 71% 45%);
-
-	--background-dark: hsl(222 47% 11%);
-	--foreground-dark: hsl(210 20% 98%);
-	--card-dark: hsl(222 47% 15%);
-	--primary-dark: hsl(243 75% 70%);
-	--secondary-dark: hsl(217 19% 27%);
-	--text-primary-dark: hsl(0 0% 100%);
-	--text-secondary-dark: hsl(215 20% 65%);
-	--border-dark: hsl(217 19% 27%);
-	--warning-dark: hsl(48 96% 89%);
-	--error-dark: hsl(0 93% 80%);
-	--success-dark: hsl(142 76% 80%);
 }
+
+.dark {
+	--background: hsl(222 47% 11%);
+	--foreground: hsl(210 20% 98%);
+	--card: hsl(222 47% 15%);
+	--primary: hsl(243 75% 70%);
+	--secondary: hsl(217 19% 27%);
+	--text-primary: hsl(0 0% 100%);
+	--text-secondary: hsl(215 20% 65%);
+	--border: hsl(217 19% 27%);
+	--warning: hsl(48 96% 89%);
+	--error: hsl(0 93% 80%);
+	--success: hsl(142 76% 80%);
+}
+
 @layer base {
-	*, ::before, ::after, ::placeholder {
+	*,
+	::before,
+	::after,
+	::placeholder {
 		@apply transition-colors duration-300 ease-in-out;
 	}
 
 	button {
-		@apply cursor-pointer hover:scale-105 active:scale-100
+		@apply cursor-pointer hover:scale-105 active:scale-100;
 	}
 
 	input {
-		@apply bg-card dark:bg-card-dark border border-border dark:border-border-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-text-primary dark:text-text-primary-dark placeholder-text-primary dark:placeholder-text-primary-dark hover:ring-2 hover:ring-primary/50 transition mb-2 p-2
+		@apply bg-card dark:bg-card border border-border dark:border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-text-primary dark:text-text-primary placeholder-text-primary dark:placeholder-text-primary hover:ring-2 hover:ring-primary/50 transition mb-2 p-2;
 	}
 }
 
@@ -53,23 +58,13 @@
 	--color-warning: var(--warning);
 	--color-error: var(--error);
 	--color-success: var(--success);
-
-	--color-background-dark: var(--background-dark);
-	--color-foreground-dark: var(--foreground-dark);
-	--color-card-dark: var(--card-dark);
-	--color-primary-dark: var(--primary-dark);
-	--color-secondary-dark: var(--secondary-dark);
-	--color-text-primary-dark: var(--text-primary-dark);
-	--color-text-secondary-dark: var(--text-secondary-dark);
-	--color-border-dark: var(--border-dark);
-	--color-warning-dark: var(--warning-dark);
-	--color-error-dark: var(--error-dark);
-	--color-success-dark: var(--success-dark);
 }
 
-
+html,
 body {
 	background: var(--background);
 	color: var(--foreground);
 	font-family: Arial, Helvetica, sans-serif;
+	scrollbar-width: auto;
+	scrollbar-color: var(--primary) transparent;
 }
