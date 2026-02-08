@@ -1,3 +1,4 @@
+'use client';
 import { Plus, X } from 'lucide-react';
 import { Dispatch, SetStateAction } from 'react';
 
@@ -17,12 +18,14 @@ export default function AddStudent({ toggleForm }: AddStudentProps) {
 				onClick={() => {
 					setShowForm(!showForm);
 				}}
-				className='flex items-center justify-center gap-2 bg-primary dark:bg-primary text-white dark:text-background px-4 py-2 rounded-lg font-medium'>
-				<div className={`${showForm ? 'hidden' : ''} flex items-center gap-2 align-middle`}>
-					<Plus className='w-4 h-4'/>
+				className='flex items-center justify-center gap-2 text-white bg-primary px-4 py-2 rounded-lg font-medium'>
+				<div
+					className={`${showForm ? 'hidden' : ''} flex items-center gap-2 align-middle`}>
+					<Plus className='w-4 h-4' />
 					Add Student
 				</div>
-				<div className={`${!showForm ? 'hidden' : ''} flex items-center gap-2 align-middle`}>
+				<div
+					className={`${!showForm ? 'hidden' : ''} flex items-center gap-2 align-middle`}>
 					<X className='w-4 h-4' />
 					Close Form
 				</div>

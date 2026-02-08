@@ -1,11 +1,10 @@
 'use client';
 import { useState, useMemo } from 'react';
-import { useTheme } from '../../lib/useTheme';
 import Header from './header';
 import SearchBar from './searchbar';
 import StudentTable from './studenttable';
 import AddStudent from './addstudent';
-import { SendHorizontal } from 'lucide-react';
+import AddStudentForm from './addstudentform';
 
 import { Student } from '../types/student';
 
@@ -51,30 +50,20 @@ const TutorTable = () => {
 		);
 	}, [searchTerm, MOCK_STUDENTS]);
 
+
 	return (
-		<div className='min-h-screen bg-background dark:bg-background p-4 md:p-8 '>
+		<div className='min-h-screen bg-background p-4 md:p-8 '>
 			<div className='max-w-4xl mx-auto'>
 				<Header />
 
 				{/* Search and Add Student */}
-				<div className='flex flex-col md:flex-row gap-4 mb-6'>
+				<div
+					className={`${showForm ? '' : 'mb-6'} flex flex-col md:flex-row gap-4`}>
 					<SearchBar setSearchTerm={setSearchTerm} />
-					<AddStudent toggleForm={{showForm, setShowForm}}/>
+					<AddStudent toggleForm={{ showForm, setShowForm }} />
 				</div>
 				{/* TODO: Add API Function */}
-				<div className={`${showForm ? "" : "hidden"} w-full h-full mb-6 rounded-2xl`}>
-					<form onSubmit={(e) => {e.preventDefault(); console.log(e.target)}} className='flex flex-col'>
-						<input type='text' placeholder='Name' />
-						<input type='text' placeholder='Grade' />
-						<input type='text' placeholder='Interests' />
-						<button
-							type='submit'
-							className='bg-primary dark:bg-primary text-white dark:text-background font-medium rounded-2xl p-2 px-4 w-fit flex items-center gap-2'>
-							<SendHorizontal className='w-4 h-4' />
-							Submit
-						</button>
-					</form>
-				</div>
+				<AddStudentForm showForm={showForm} />
 				<StudentTable students={filteredStudents} />
 			</div>
 		</div>
