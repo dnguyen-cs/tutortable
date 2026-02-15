@@ -1,5 +1,5 @@
 'use client';
-import { Student } from '../types/student';
+import { Student } from '../../types/student';
 
 interface StudentTableProps {
 	students: Student[];
@@ -37,7 +37,7 @@ export default function StudentTable({ students }: StudentTableProps) {
 										{student.name}
 									</div>
 									<div className='text-sm text-text-secondary'>
-										Grade: {student.grade}
+										Grade: {student.grade_level}
 									</div>
 								</td>
 								<td className='p-4'>

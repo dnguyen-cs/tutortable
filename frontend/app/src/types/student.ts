@@ -1,6 +1,6 @@
 export interface Student {
 	id: number;
 	name: string;
-	grade: number;
+	grade_level: number;
     mastery_scores: Record<string, number> | null;
 }

@@ -22,6 +22,7 @@ services:
         environment:
             DATABASE_URL: postgresql://user:password@db:5432/tutortable_db
         depends_on:
-            - db
+            db:
+                condition: service_healthy
 volumes:
     postgres_data:

@@ -1,4 +1,4 @@
 fastapi[standard]
 sqlalchemy
-psycopg2
+psycopg2-binary
 google-genai

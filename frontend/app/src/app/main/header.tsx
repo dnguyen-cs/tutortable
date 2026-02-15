@@ -1,6 +1,6 @@
 'use client';
 import { GraduationCap, Moon, Sun } from 'lucide-react';
-import { useTheme } from '../../../lib/useTheme';
+import { useTheme } from '../../lib/useTheme';
 
 export default function Header() {
 	const { theme, toggleTheme } = useTheme();

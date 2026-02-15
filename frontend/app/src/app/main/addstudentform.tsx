@@ -1,8 +1,9 @@
 'use client';
-import { ChangeEvent, useState } from 'react';
+import { SubmitEvent, useState, Dispatch, SetStateAction } from 'react';
 import { SendHorizontal } from 'lucide-react';
+import { Student } from '../../types/student';
 
-export default function AddStudentForm({ showForm }: { showForm: boolean }) {
+export default function AddStudentForm({ showForm, updateStudents }: { showForm: boolean, updateStudents: Dispatch<SetStateAction<Student[]>> }) {
 	const [formData, setFormData] = useState({
 		name: '',
 		grade: '',
@@ -10,16 +11,55 @@ export default function AddStudentForm({ showForm }: { showForm: boolean }) {
 	});
 
 	const validateGrade = (grade: string) => {
-		if (grade == 'k') return true;
-		const numGrade = parseFloat(grade);
-		return Number.isInteger(numGrade) && numGrade > 0 && numGrade <= 12;
-	};
+        const validStrings = ['K', 'UNDERGRADUATE', 'GRADUATE'];
+        if (validStrings.includes(grade.toUpperCase())) return true;
 
-	const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+        const numGrade = parseFloat(grade);
+        return Number.isInteger(numGrade) && numGrade > 0 && numGrade <= 12;
+    };
+
+	const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (!validateGrade(formData.grade)) {
-			alert('Please enter a valid grade (K-12)');
+			alert('Please enter a valid grade (K-12, Undergraduate, Graduate)');
 			return;
+		}
+		
+		const gradeMap: Record<string, number> = {
+			K: 0,
+			UNDERGRADUATE: 13,
+			GRADUATE: 14,
+		};
+
+		const normalizedInput = formData.grade.toUpperCase();
+		const gradeValue = gradeMap[normalizedInput] ?? parseInt(formData.grade, 10);
+
+		const student = {
+			name: formData.name,
+			grade_level: gradeValue,
+			mastery_scores: {},
+			interests: formData.interests.split(',').map((interest) => interest.trim()),
+		};
+
+		try {
+			const res = await fetch(
+				`${process.env.NEXT_PUBLIC_API_URL}/api/students`,
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(student),
+				},
+			);
+			if (!res.ok) {
+				throw new Error('Failed to add student');
+			}
+			const data = await res.json();
+			updateStudents((prev) => [...prev, data]);
+			setFormData({ name: '', grade: '', interests: '' });
+		} catch (err) {
+			console.error('Error adding student:', err);
 		}
 	};
 
