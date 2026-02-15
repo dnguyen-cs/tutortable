@@ -1,6 +1,5 @@
 'use client';
 import { useState, useMemo, useEffect } from 'react';
-import Header from './header';
 import SearchBar from './searchbar';
 import StudentTable from './studenttable';
 import AddStudent from './addstudent';
@@ -30,19 +29,19 @@ const TutorTable = () => {
 	}, [searchTerm, studentsList]);
 
 	return (
-		<div className='min-h-screen bg-background p-4 md:p-8 '>
-			<div className='max-w-4xl mx-auto'>
-				<Header />
-				{/* Search and Add Student Button */}
-				<div
-					className={`${showForm ? '' : 'mb-6'} flex flex-col md:flex-row gap-4`}>
-					<SearchBar setSearchTerm={setSearchTerm} />
-					<AddStudent toggleForm={{ showForm, setShowForm }} />
-				</div>
-
-				<AddStudentForm showForm={showForm} updateStudents={setStudentsList} />
-				<StudentTable students={filteredStudents} />
+		<div className='max-w-4xl mx-auto'>
+			{/* Search and Add Student Button */}
+			<div
+				className={`${showForm ? '' : 'mb-6'} flex flex-col md:flex-row gap-4`}>
+				<SearchBar setSearchTerm={setSearchTerm} />
+				<AddStudent toggleForm={{ showForm, setShowForm }} />
 			</div>
+
+			<AddStudentForm
+				showForm={showForm}
+				updateStudents={setStudentsList}
+			/>
+			<StudentTable students={filteredStudents} />
 		</div>
 	);
 };

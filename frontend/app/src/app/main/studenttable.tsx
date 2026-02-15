@@ -1,5 +1,6 @@
 'use client';
 import { Student } from '../../types/student';
+import { useRouter } from 'next/navigation';
 
 interface StudentTableProps {
 	students: Student[];
@@ -12,6 +13,12 @@ export default function StudentTable({ students }: StudentTableProps) {
 		if (score < 65) return 'text-error';
 		return 'text-text-secondary';
 	};
+	
+	const router = useRouter();
+	const handleStudentClick = (student: Student) => {
+		router.push('/student/' + student.id);
+		return;
+	}
 
 	return (
 		<div>
@@ -30,8 +37,9 @@ export default function StudentTable({ students }: StudentTableProps) {
 					<tbody className='divide-y divide-border'>
 						{students.map((student) => (
 							<tr
+							onClick={() => handleStudentClick(student)}
 								key={student.id}
-								className='bg-card hover:bg-secondary/5 cursor-pointer active:scale-98'>
+								className='bg-card hover:bg-secondary/60 cursor-pointer'>
 								<td className='p-4 align-top'>
 									<div className='font-bold text-lg text-text-primary'>
 										{student.name}

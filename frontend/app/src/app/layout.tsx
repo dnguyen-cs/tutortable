@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { fira_code } from "../../ui/fonts";
 import "./globals.css";
+import Header from "./main/header";
 
 export const metadata: Metadata = {
   title: "Tutor Table",
@@ -12,11 +13,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
   return (
     <html lang="en">
       <body
         className={`${fira_code.className} antialiased`}
       >
+        
+        <Header />
         {children}
       </body>
     </html>
