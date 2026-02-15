@@ -29,7 +29,7 @@ const TutorTable = () => {
 	}, [searchTerm, studentsList]);
 
 	return (
-		<div className='max-w-4xl mx-auto'>
+		<div className="flex-1 p-4 md:p-10 max-w-7xl mx-auto w-full">
 			{/* Search and Add Student Button */}
 			<div
 				className={`${showForm ? '' : 'mb-6'} flex flex-col md:flex-row gap-4`}>
