@@ -1,10 +1,4 @@
-import {
-	LayoutDashboard,
-	User,
-	Settings,
-    GraduationCap,
-	Calendar,
-} from 'lucide-react';
+import { LayoutDashboard, User, Settings, GraduationCap, Calendar } from 'lucide-react';
 
 export default function Sidebar() {
 	return (
@@ -18,19 +12,29 @@ export default function Sidebar() {
 					label='Overview'
 					active
 				/>
-				<NavItem icon={<User size={20} />} label='Student List' />
-				<NavItem icon={<Calendar size={20} />} label='Schedule' />
-				<NavItem icon={<Settings size={20} />} label='Settings' />
+				<NavItem
+					icon={<User size={20} />}
+					label='Student List'
+				/>
+				<NavItem
+					icon={<Calendar size={20} />}
+					label='Schedule'
+				/>
+				<NavItem
+					icon={<Settings size={20} />}
+					label='Settings'
+				/>
 			</nav>
 		</aside>
 	);
 }
 
-function NavItem({ icon, label, active = false }: { icon: React.ReactNode, label: string, active?: boolean }) {
-  return (
-    <div className={`flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all ${active ? 'bg-primary text-white shadow-md shadow-primary/20' : 'text-text-secondary hover:bg-background'}`}>
-      {icon}
-      <span className="font-bold text-sm">{label}</span>
-    </div>
-  );
+function NavItem({ icon, label, active = false }: { icon: React.ReactNode; label: string; active?: boolean }) {
+	return (
+		<div
+			className={`flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all ${active ? 'bg-primary text-white shadow-md shadow-primary/20' : 'text-text-secondary hover:bg-background'}`}>
+			{icon}
+			<span className='font-bold text-sm'>{label}</span>
+		</div>
+	);
 }

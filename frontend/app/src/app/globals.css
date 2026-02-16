@@ -29,6 +29,10 @@
 	--success: hsl(142 76% 80%);
 }
 
+.container {
+	@apply flex-1 p-4 md:p-10 max-w-7xl mx-auto w-full
+}
+
 @layer base {
 	*,
 	::before,

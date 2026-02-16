@@ -11,6 +11,7 @@ class Student(Base):
     name = Column(String, nullable=False) # Student name | John Smith
     grade_level = Column(Integer, nullable=False) # Grade Level | 5
     mastery_scores = Column(JSON, default=dict) # Mastery Scores | {"Fractions": 0.8, "Decimals": 0.6}
+    mastery_history = Column(JSON, default=dict)
     interests = Column(JSON, default=list) # Interests | ["Gaming", "Sports", "Music"]
 
     sessions = relationship("Session", back_populates="student") 

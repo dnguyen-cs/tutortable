@@ -8,6 +8,10 @@ import AddStudentForm from './addstudentform';
 import { Student } from '../../types/student';
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
 
+// TODO Fix dashboard (student/[id]/page.tsx) and enable sidebar functionality.
+// TODO Add API fetching for StudentDashboard
+// TODO Add editing options for "Edit Mastery Scores" button in StudentTable
+// TODO 
 const TutorTable = () => {
 	const [searchTerm, setSearchTerm] = useState('');
 	const [showForm, setShowForm] = useState(false);
@@ -23,16 +27,13 @@ const TutorTable = () => {
 	}, []);
 
 	const filteredStudents = useMemo(() => {
-		return studentsList.filter((student) =>
-			student.name.toLowerCase().includes(searchTerm.toLowerCase()),
-		);
+		return studentsList.filter((student) => student.name.toLowerCase().includes(searchTerm.toLowerCase()));
 	}, [searchTerm, studentsList]);
 
 	return (
-		<div className="flex-1 p-4 md:p-10 max-w-7xl mx-auto w-full">
+		<div className='flex-1 p-10 max-w-7xl mx-auto w-full'>
 			{/* Search and Add Student Button */}
-			<div
-				className={`${showForm ? '' : 'mb-6'} flex flex-col md:flex-row gap-4`}>
+			<div className={`${showForm ? '' : 'mb-6'} flex flex-col md:flex-row gap-4`}>
 				<SearchBar setSearchTerm={setSearchTerm} />
 				<AddStudent toggleForm={{ showForm, setShowForm }} />
 			</div>

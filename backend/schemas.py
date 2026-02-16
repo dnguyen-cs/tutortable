@@ -40,6 +40,7 @@ class StudentBase(BaseModel):
     name: str
     grade_level: int
     mastery_scores: Dict[str, float] = {}
+    mastery_history: Dict[str, Dict[str, float]] = {}
     interests: List[str] = []
 
 class StudentCreate(StudentBase):
