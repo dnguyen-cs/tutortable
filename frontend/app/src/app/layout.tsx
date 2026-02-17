@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { fira_code } from '../../ui/fonts';
 import './globals.css';
-import Header from './main/header';
-import Sidebar from './main/sidebar';
+import Header from '../components/layout/LayoutHeader';
+import Sidebar from '../components/layout/Sidebar';
 
 export const metadata: Metadata = {
 	title: 'Tutor Table',

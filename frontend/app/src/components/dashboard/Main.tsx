@@ -1,9 +1,9 @@
 'use client';
 import { useState, useMemo, useEffect } from 'react';
-import SearchBar from './searchbar';
-import StudentTable from './studenttable';
-import AddStudent from './addstudent';
-import AddStudentForm from './addstudentform';
+import SearchBar from './header/SearchBar';
+import StudentTable from './table/StudentTable';
+import AddStudent from './header/AddStudent';
+import AddStudentForm from './header/AddStudentForm';
 
 import { Student } from '../../types/student';
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
@@ -11,7 +11,6 @@ const apiURL = process.env.NEXT_PUBLIC_API_URL;
 // TODO Fix dashboard (student/[id]/page.tsx) and enable sidebar functionality.
 // TODO Add API fetching for StudentDashboard
 // TODO Add editing options for "Edit Mastery Scores" button in StudentTable
-// TODO 
 const TutorTable = () => {
 	const [searchTerm, setSearchTerm] = useState('');
 	const [showForm, setShowForm] = useState(false);

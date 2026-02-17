@@ -1,8 +1,8 @@
 'use client';
 
-import Header from './components/header';
-import MasteryHistory from './components/masteryhistory';
-import MasteryScoreRow from '../../../../ui/MasteryScoreRow';
+import Header from '../../../components/student-details/StudentDetailsHeader';
+import MasteryHistory from '../../../components/student-details/MasteryHistory';
+import MasteryScoreRow from '../../../components/MasteryScoreRow';
 import { TrendingUp, Clock, ChevronRight } from 'lucide-react';
 import { use } from 'react';
 

@@ -1,4 +1,4 @@
-import { LayoutDashboard, User, Settings, GraduationCap, Calendar } from 'lucide-react';
+import { LayoutDashboard, Settings, GraduationCap, Calendar } from 'lucide-react';
 
 export default function Sidebar() {
 	return (
@@ -11,10 +11,6 @@ export default function Sidebar() {
 					icon={<LayoutDashboard size={20} />}
 					label='Overview'
 					active
-				/>
-				<NavItem
-					icon={<User size={20} />}
-					label='Student List'
 				/>
 				<NavItem
 					icon={<Calendar size={20} />}

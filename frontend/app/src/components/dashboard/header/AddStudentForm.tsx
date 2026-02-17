@@ -1,9 +1,15 @@
 'use client';
 import { SubmitEvent, useState, Dispatch, SetStateAction } from 'react';
 import { SendHorizontal } from 'lucide-react';
-import { Student } from '../../types/student';
+import { Student } from '../../../types/student';
 
-export default function AddStudentForm({ showForm, updateStudents }: { showForm: boolean, updateStudents: Dispatch<SetStateAction<Student[]>> }) {
+export default function AddStudentForm({
+	showForm,
+	updateStudents,
+}: {
+	showForm: boolean;
+	updateStudents: Dispatch<SetStateAction<Student[]>>;
+}) {
 	const [formData, setFormData] = useState({
 		name: '',
 		grade: '',
@@ -11,12 +17,12 @@ export default function AddStudentForm({ showForm, updateStudents }: { showForm:
 	});
 
 	const validateGrade = (grade: string) => {
-        const validStrings = ['K', 'UNDERGRADUATE', 'GRADUATE'];
-        if (validStrings.includes(grade.toUpperCase())) return true;
+		const validStrings = ['K', 'UNDERGRADUATE', 'GRADUATE'];
+		if (validStrings.includes(grade.toUpperCase())) return true;
 
-        const numGrade = parseFloat(grade);
-        return Number.isInteger(numGrade) && numGrade > 0 && numGrade <= 12;
-    };
+		const numGrade = parseFloat(grade);
+		return Number.isInteger(numGrade) && numGrade > 0 && numGrade <= 12;
+	};
 
 	const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -24,7 +30,7 @@ export default function AddStudentForm({ showForm, updateStudents }: { showForm:
 			alert('Please enter a valid grade (K-12, Undergraduate, Graduate)');
 			return;
 		}
-		
+
 		const gradeMap: Record<string, number> = {
 			K: 0,
 			UNDERGRADUATE: 13,
@@ -42,16 +48,13 @@ export default function AddStudentForm({ showForm, updateStudents }: { showForm:
 		};
 
 		try {
-			const res = await fetch(
-				`${process.env.NEXT_PUBLIC_API_URL}/api/students`,
-				{
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify(student),
+			const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/students`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
 				},
-			);
+				body: JSON.stringify(student),
+			});
 			if (!res.ok) {
 				throw new Error('Failed to add student');
 			}
@@ -64,9 +67,10 @@ export default function AddStudentForm({ showForm, updateStudents }: { showForm:
 	};
 
 	return (
-		<div
-			className={`${showForm ? '' : 'hidden'} w-full h-full mb-6 rounded-2xl border-2 border-border p-2`}>
-			<form onSubmit={(e) => handleSubmit(e)} className='flex flex-col'>
+		<div className={`${showForm ? '' : 'hidden'} w-full h-full mb-6 rounded-2xl border-2 border-border p-2`}>
+			<form
+				onSubmit={(e) => handleSubmit(e)}
+				className='flex flex-col'>
 				<div className='flex flex-col'>
 					<label className='font-bold'>Name</label>
 					<input
@@ -74,9 +78,7 @@ export default function AddStudentForm({ showForm, updateStudents }: { showForm:
 						type='text'
 						placeholder='John Doe'
 						className='placeholder:text-text-primary/65'
-						onChange={(e) =>
-							setFormData({ ...formData, name: e.target.value })
-						}
+						onChange={(e) => setFormData({ ...formData, name: e.target.value })}
 						value={formData.name}
 					/>
 				</div>
@@ -88,9 +90,7 @@ export default function AddStudentForm({ showForm, updateStudents }: { showForm:
 						type='text'
 						placeholder='5'
 						className='placeholder:text-text-primary/65'
-						onChange={(e) =>
-							setFormData({ ...formData, grade: e.target.value })
-						}
+						onChange={(e) => setFormData({ ...formData, grade: e.target.value })}
 						value={formData.grade}
 					/>
 				</div>
