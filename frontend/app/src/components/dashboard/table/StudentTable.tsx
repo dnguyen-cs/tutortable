@@ -1,14 +1,15 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Dispatch, SetStateAction } from 'react';
 import { Student } from '../../../types/student';
 import StudentRow from './StudentRow';
 
 interface StudentTableProps {
 	students: Student[];
+	updateStudents: Dispatch<SetStateAction<Student[]>>;
 }
 
-export default function StudentTable({ students }: StudentTableProps) {
+export default function StudentTable({ students, updateStudents }: StudentTableProps) {
 	const [editingStudentId, setEditingStudentId] = useState<number | null>(null);
 
 	return (
@@ -27,6 +28,7 @@ export default function StudentTable({ students }: StudentTableProps) {
 							student={student}
 							isEditing={editingStudentId === student.id}
 							setEditingId={setEditingStudentId}
+							updateStudents={updateStudents}
 						/>
 					))}
 				</tbody>

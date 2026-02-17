@@ -30,7 +30,7 @@ const TutorTable = () => {
 	}, [searchTerm, studentsList]);
 
 	return (
-		<div className='flex-1 p-10 max-w-7xl mx-auto w-full'>
+		<div className='flex-1 p-4 md:p-6 lg:p-10 md:ml-16 lg:ml-64 max-w-7xl mx-auto'>
 			{/* Search and Add Student Button */}
 			<div className={`${showForm ? '' : 'mb-6'} flex flex-col md:flex-row gap-4`}>
 				<SearchBar setSearchTerm={setSearchTerm} />
@@ -41,7 +41,7 @@ const TutorTable = () => {
 				showForm={showForm}
 				updateStudents={setStudentsList}
 			/>
-			<StudentTable students={filteredStudents} />
+			<StudentTable students={filteredStudents} updateStudents={setStudentsList}/>
 		</div>
 	);
 };

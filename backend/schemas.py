@@ -53,3 +53,9 @@ class StudentRead(StudentBase):
 
     class Config:
         from_attributes = True
+
+class StudentUpdate(BaseModel):
+    name: Optional[str] = None
+    grade_level: Optional[int] = None
+    mastery_scores: Optional[Dict] = None
+    interests: Optional[str] = None
