@@ -3,7 +3,7 @@
 import { Dispatch, SetStateAction, MouseEvent } from 'react';
 import { Pencil } from 'lucide-react';
 import { Student } from '../../../../types/student';
-import { useMasteryScores } from './useMasteryScores';
+import { useUpdateStudent } from './useUpdateStudent';
 import ScoreList from './ScoreList';
 import NewScoreForm from './NewScoreForm';
 
@@ -15,7 +15,7 @@ interface EditMasteryScoresProps {
 }
 
 export default function EditStudent({ student, editing, setEditing, updateStudents }: EditMasteryScoresProps) {
-	const { addScore, deleteScore } = useMasteryScores(student, updateStudents);
+	const { addScore, deleteScore } = useUpdateStudent(student, updateStudents);
 
 	const toggleEdit = (e: MouseEvent) => {
 		e.stopPropagation();
