@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
-import { fira_code } from '../../ui/fonts';
+import { fira_code } from '@/lib/fonts';
 import './globals.css';
-import Header from '../components/layout/LayoutHeader';
-import Sidebar from '../components/layout/Sidebar';
+import Header from '@/components/layout/LayoutHeader';
+import Sidebar from '@/components/layout/Sidebar';
 
 export const metadata: Metadata = {
 	title: 'Tutor Table',
@@ -18,7 +18,7 @@ export default function RootLayout({
 		<html lang='en'>
 			<body className={`${fira_code.className} antialiased`}>
 				<Header />
-        <Sidebar />
+				<Sidebar />
 				{children}
 			</body>
 		</html>

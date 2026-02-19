@@ -9,7 +9,7 @@ interface AddStudentProps {
 	};
 }
 
-export default function AddStudent({ toggleForm }: AddStudentProps) {
+export default function AddStudentButton({ toggleForm }: AddStudentProps) {
 	const { showForm, setShowForm } = toggleForm;
 
 	return (

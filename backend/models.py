@@ -8,6 +8,7 @@ class Student(Base):
     __tablename__ = "students"
     id = Column(Integer, primary_key=True, index=True)
 
+    tutor_id = Column(String, index=True, nullable=False)
     name = Column(String, nullable=False) # Student name | John Smith
     grade_level = Column(Integer, nullable=False) # Grade Level | 5
     mastery_scores = Column(JSON, default=dict) # Mastery Scores | {"Fractions": 0.8, "Decimals": 0.6}

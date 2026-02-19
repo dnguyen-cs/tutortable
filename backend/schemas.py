@@ -58,4 +58,5 @@ class StudentUpdate(BaseModel):
     name: Optional[str] = None
     grade_level: Optional[int] = None
     mastery_scores: Optional[Dict] = None
+    mastery_history: Optional[Dict[str, Dict[str, float]]] = None
     interests: Optional[str] = None
