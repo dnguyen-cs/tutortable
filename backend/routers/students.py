@@ -38,6 +38,7 @@ def create_student(student: schemas.StudentCreate, db: Session = Depends(get_db)
         name=student.name,
         grade_level=student.grade_level,
         mastery_scores=student.mastery_scores,
+        mastery_history=student.mastery_history,
         interests=student.interests
     )
 
