@@ -1,52 +1,68 @@
 'use client';
-import {
-	LineChart,
-	Line,
-	XAxis,
-	YAxis,
-	Tooltip,
-	Legend,
-	ResponsiveContainer,
-} from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { Student } from '@/types/student';
 
-const MOCK_DATA = {
-	'Jan 2026': { Decimals: 60 },
-	'Feb 2026': { Decimals: 65 },
-	'Mar 2026': { Fractions: 78, Decimals: 70 },
-	'Apr 2026': { Fractions: 85, Decimals: 72 },
-	'May 2026': { Fractions: 90, Decimals: 80 },
-	'Jun 2026': { Fractions: 88, Decimals: 78 },
-	'Jul 2026': { Fractions: 92, Decimals: 82 },
-	'Aug 2026': { Fractions: 95, Decimals: 85 },
-	'Sep 2026': { Fractions: 94, Decimals: 88 },
-	'Oct 2026': { Fractions: 96, Decimals: 90 },
-	'Nov 2026': { Fractions: 98, Decimals: 92 },
-	'Dec 2026': { Fractions: 97, Decimals: 91 },
-};
+function getColor(index: number, total: number) {
+	const hue = Math.round((index / total) * 360);
+	return `hsl(${hue}, 70%, 55%)`;
+}
 
-const MOCK_MASTERY_SCORES = Object.entries(MOCK_DATA).map(
-	([month, scores]) => ({ month, ...scores }),
-);
+function buildChartData(student: Student) {
+	const masteryHistory = student.mastery_history;
+	const dateMap: Record<string, Record<string, number>> = {};
 
-const dataKeys = Array.from(
-	new Set(
-		MOCK_MASTERY_SCORES.flatMap((obj) =>
-			Object.keys(obj).filter((key) => key !== 'month'),
-		),
-	),
-);
+	Object.entries(masteryHistory).forEach(([subject, dates]) => {
+		Object.entries(dates).forEach(([dateStr, score]) => {
+			if (!dateMap[dateStr]) dateMap[dateStr] = {};
+			dateMap[dateStr][subject] = score;
+		});
+	});
 
-const COLORS = ['#8884d8', '#82ca9d', '#ffc658'];
+	const sortedDates = Object.keys(dateMap).sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
 
-export default function MasteryHistory() {
+	return sortedDates.map((dateStr) => ({
+		date: dateStr,
+		...dateMap[dateStr],
+	}));
+}
+
+function getMonthTicks(dates: string[]): string[] {
+	const seen = new Set<string>();
+	return dates.filter((dateStr) => {
+		const key = dateStr.slice(0, 7);
+		if (seen.has(key)) return false;
+		seen.add(key);
+		return true;
+	});
+}
+
+function formatMonthTick(dateStr: string) {
+	return new Date(dateStr).toLocaleString('default', { month: 'short', year: 'numeric' });
+}
+
+export default function MasteryHistory({ student }: { student: Student }) {
+	const chartData = buildChartData(student);
+	const dataKeys = Array.from(new Set(chartData.flatMap((obj) => Object.keys(obj).filter((key) => key !== 'date'))));
+	const dates = chartData.map((d) => d.date as string);
+	const monthTicks = getMonthTicks(dates);
+
 	return (
 		<div className='container h-120'>
-			<ResponsiveContainer width='100%' height='100%'>
+			<ResponsiveContainer
+				width='100%'
+				height='100%'>
 				<LineChart
-					data={MOCK_MASTERY_SCORES}
+					data={chartData}
 					margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-					<Legend align='right' verticalAlign='top' />
-					<XAxis dataKey={`month`} />
+					<Legend
+						align='right'
+						verticalAlign='top'
+					/>
+					<XAxis
+						dataKey='date'
+						ticks={monthTicks}
+						tickFormatter={formatMonthTick}
+					/>
 					<YAxis
 						width='auto'
 						domain={[0, 100]}
@@ -62,7 +78,7 @@ export default function MasteryHistory() {
 							key={key}
 							type='monotone'
 							dataKey={key}
-							stroke={COLORS[index % COLORS.length]}
+							stroke={getColor(index, dataKeys.length)}
 							strokeWidth={2}
 							activeDot={{ r: 8 }}
 							connectNulls

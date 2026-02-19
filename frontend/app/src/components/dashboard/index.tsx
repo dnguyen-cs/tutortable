@@ -12,7 +12,7 @@ const TutorTableContent = () => {
 	const [showForm, setShowForm] = useState(false);
 
 	return (
-		<div className='flex-1 p-4 md:p-6 lg:p-10 md:ml-16 lg:ml-64 max-w-7xl mx-auto'>
+		<div className='max-w-7xl mx-auto p-4 md:p-10'>
 			<div className={`${showForm ? '' : 'mb-6'} flex flex-col md:flex-row gap-4`}>
 				<SearchBar />
 				<AddStudentButton toggleForm={{ showForm, setShowForm }} />

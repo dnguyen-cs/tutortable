@@ -5,7 +5,7 @@ import { useStudents } from '@/hooks/StudentsContext';
 export default function SearchBar() {
 	const { setSearchTerm } = useStudents();
 	return (
-		<div className='relative flex-1'>
+		<div className='relative flex-1 w-full min-w-0'>
 			<Search className='absolute left-3 top-3 text-text-secondary w-4 h-4' />
 			<input
 				type='text'

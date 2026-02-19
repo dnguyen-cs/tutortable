@@ -93,6 +93,8 @@ function EditModeContent({ student, editor }: EditModeContentProps) {
 				setSubject={editor.setSubject}
 				score={editor.score}
 				setScore={editor.setScore}
+				date={editor.date}
+				setDate={editor.setDate}
 			/>
 		</div>
 	);

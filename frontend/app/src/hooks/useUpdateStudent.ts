@@ -68,9 +68,26 @@ export const useUpdateStudent = (student: Student) => {
 
 		const updatedScores = {
 			...student.mastery_scores,
-			[subject]: Number(score),
+			[subject]: numScore,
 		};
 		await handleUpdate({ mastery_scores: updatedScores });
+	};
+
+	const addScoreWithDate = async (subject: string, score: string, date: string) => {
+		if (!subject || !score || !date) return;
+		const numScore = Number(score);
+		if (isNaN(numScore) || numScore < 0 || numScore > 100) {
+			alert('Score must be a number between 0 and 100');
+			return;
+		}
+		const updatedHistory = {
+			...student.mastery_history,
+			[subject]: {
+				...(student.mastery_history[subject] ?? {}),
+				[date]: numScore,
+			},
+		};
+		await handleUpdate({ mastery_history: updatedHistory });
 	};
 
 	const deleteScore = async (subjectToDelete: string) => {
@@ -80,5 +97,5 @@ export const useUpdateStudent = (student: Student) => {
 		await handleUpdate({ mastery_scores: updatedScores });
 	};
 
-	return { changeName, changeGrade, addScore, deleteScore, deleteStudent };
+	return { changeName, changeGrade, addScore, addScoreWithDate, deleteScore, deleteStudent };
 };

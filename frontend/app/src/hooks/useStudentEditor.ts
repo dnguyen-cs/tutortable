@@ -1,4 +1,4 @@
-import { useState, MouseEvent } from 'react';
+import { useState } from 'react';
 import { Student } from '@/types/student';
 import { useUpdateStudent } from '@/hooks/useUpdateStudent';
 
@@ -9,8 +9,10 @@ export const useStudentEditor = (student: Student) => {
 	const [editedGrade, setEditedGrade] = useState(student.grade_level);
 	const [subject, setSubject] = useState('');
 	const [score, setScore] = useState('');
+	const [date, setDate] = useState(() => new Date().toISOString().split('T')[0]);
 
-	const { changeName, changeGrade, addScore, deleteScore, deleteStudent } = useUpdateStudent(student);
+	const { changeName, changeGrade, addScore, deleteScore, deleteStudent, addScoreWithDate } =
+		useUpdateStudent(student);
 
 	const handleNameChange = async () => {
 		if (editedName.trim() === student.name) return;
@@ -25,8 +27,10 @@ export const useStudentEditor = (student: Student) => {
 	const handleMasteryScoreAdd = async (subject: string, score: string) => {
 		if (subject.trim() === '' || score.trim() === '') return;
 		await addScore(subject, score);
+		await addScoreWithDate(subject, score, date);
 		setSubject('');
 		setScore('');
+		setDate(new Date().toISOString().split('T')[0]);
 	};
 
 	const hasNameChanged = editedName.trim() !== student.name;
@@ -45,6 +49,8 @@ export const useStudentEditor = (student: Student) => {
 		setSubject,
 		score,
 		setScore,
+		date,
+		setDate,
 		// Editing state
 		editingStudentId,
 		setEditingStudentId,
@@ -58,8 +64,9 @@ export const useStudentEditor = (student: Student) => {
 		// Score operations
 		addScore,
 		deleteScore,
+		addScoreWithDate,
 
 		//DELETE
-		deleteStudent
+		deleteStudent,
 	};
 };
