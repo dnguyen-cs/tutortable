@@ -5,7 +5,7 @@
 	--background: hsl(210 20% 98%);
 	--foreground: hsl(222 47% 11%);
 	--card: hsl(0 0% 100%);
-	--primary: hsl(243 75% 59%);
+	--primary: hsl(205 90% 50%);
 	--secondary: hsl(215 16% 47%);
 	--text-primary: hsl(222 47% 11%);
 	--text-secondary: hsl(215 16% 47%);
@@ -19,7 +19,7 @@
 	--background: hsl(222 47% 11%);
 	--foreground: hsl(210 20% 98%);
 	--card: hsl(222 47% 15%);
-	--primary: hsl(243 75% 70%);
+	--primary: hsl(205 90% 65%);
 	--secondary: hsl(217 19% 27%);
 	--text-primary: hsl(0 0% 100%);
 	--text-secondary: hsl(215 20% 65%);
@@ -30,15 +30,14 @@
 }
 
 .container {
-	@apply flex-1 p-4 md:p-10 max-w-7xl mx-auto w-full
+	@apply flex-1 p-4 md:p-10 max-w-7xl mx-auto w-full;
 }
 
 @layer base {
 	*,
 	::before,
 	::after,
-	::placeholder
-	{
+	::placeholder {
 		@apply transition-colors duration-300 ease-in-out;
 	}
 

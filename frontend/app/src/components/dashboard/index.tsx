@@ -7,7 +7,11 @@ import AddStudentForm from './header/AddStudentForm';
 import { StudentsProvider } from '@/hooks/StudentsContext';
 
 // TODO Fix dashboard (student/[id]/page.tsx) and enable sidebar functionality.
-// TODO Add API fetching for StudentDashboard
+// TODO Add option to delete a mastery score from mastery history and update the chart accordingly. | student/[id]/page.tsx)
+// TODO Integrade AI button
+// TODO AWS Cognito
+// TODO student/[id]/page.tsx - add logic for CURRENT STANDING
+// TODO student/[id]/page.tsx - add logic for RECENT SESSIONS
 const TutorTableContent = () => {
 	const [showForm, setShowForm] = useState(false);
 

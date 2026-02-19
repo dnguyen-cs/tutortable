@@ -1,6 +1,7 @@
 import { GraduationCap, Sparkles } from 'lucide-react';
+import { Student } from '@/types/student';
 
-export default function Header() {
+export default function Header({student} : {student : Student}) {
 	return (
 		<header className='flex flex-row items-end justify-between border-b-2 border-border pb-4'>
 			<div>
@@ -10,10 +11,10 @@ export default function Header() {
 					</span>
 				</div>
 				<h1 className='text-4xl font-black tracking-tight text-text-primary'>
-					Alex Johnson
+					{student.name}
 				</h1>
 				<p className='text-text-secondary mt-1 flex items-center gap-2'>
-					<GraduationCap size={18} /> Grade 5
+					<GraduationCap size={18} /> Grade {student.grade_level}
 				</p>
 			</div>
 
