@@ -2,6 +2,9 @@
 import { createContext, useContext, useState, useEffect, useMemo, ReactNode, Dispatch, SetStateAction } from 'react';
 import { Student } from '../types/student';
 
+export type SortKey = 'name' | 'date_created';
+export type SortDir = 'asc' | 'desc';
+
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
 
 interface StudentsContextType {
@@ -11,6 +14,10 @@ interface StudentsContextType {
 	searchTerm: string;
 	setSearchTerm: Dispatch<SetStateAction<string>>;
 	isLoading: boolean;
+	error: string | null;
+	sortKey: SortKey;
+	sortDir: SortDir;
+	setSort: (key: SortKey) => void;
 }
 
 const StudentsContext = createContext<StudentsContextType | undefined>(undefined);
@@ -19,6 +26,18 @@ export function StudentsProvider({ children }: { children: ReactNode }) {
 	const [studentsList, setStudentsList] = useState<Student[]>([]);
 	const [searchTerm, setSearchTerm] = useState('');
 	const [isLoading, setIsLoading] = useState(true);
+	const [error, setError] = useState<string | null>(null);
+	const [sortKey, setSortKey] = useState<SortKey>('name');
+	const [sortDir, setSortDir] = useState<SortDir>('asc');
+
+	const setSort = (key: SortKey) => {
+		if (key === sortKey) {
+			setSortDir((prev) => (prev === 'asc' ? 'desc' : 'asc'));
+		} else {
+			setSortKey(key);
+			setSortDir('asc');
+		}
+	};
 
 	useEffect(() => {
 		const fetchStudents = async () => {
@@ -29,11 +48,11 @@ export function StudentsProvider({ children }: { children: ReactNode }) {
 				}
 				const data = await res.json();
 				setStudentsList(data);
-			}
-			catch (error) {
+				setError(null);
+			} catch (error) {
 				console.error('Error fetching students:', error);
-			} 
-			finally {
+				setError(error instanceof Error ? error.message : 'Unknown error');
+			} finally {
 				setIsLoading(false);
 			}
 		};
@@ -41,8 +60,19 @@ export function StudentsProvider({ children }: { children: ReactNode }) {
 	}, []);
 
 	const filteredStudents = useMemo(() => {
-		return studentsList.filter((student) => student.name.toLowerCase().includes(searchTerm.toLowerCase()));
-	}, [searchTerm, studentsList]);
+		const filtered = studentsList.filter((student) =>
+			student.name.toLowerCase().includes(searchTerm.toLowerCase()),
+		);
+		return [...filtered].sort((a, b) => {
+			let cmp = 0;
+			if (sortKey === 'name') {
+				cmp = a.name.localeCompare(b.name);
+			} else {
+				cmp = new Date(a.date_created).getTime() - new Date(b.date_created).getTime();
+			}
+			return sortDir === 'asc' ? cmp : -cmp;
+		});
+	}, [searchTerm, studentsList, sortKey, sortDir]);
 
 	return (
 		<StudentsContext.Provider
@@ -53,6 +83,10 @@ export function StudentsProvider({ children }: { children: ReactNode }) {
 				searchTerm,
 				setSearchTerm,
 				isLoading,
+				error,
+				sortKey,
+				sortDir,
+				setSort,
 			}}>
 			{children}
 		</StudentsContext.Provider>

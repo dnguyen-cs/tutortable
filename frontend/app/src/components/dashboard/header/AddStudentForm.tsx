@@ -26,6 +26,7 @@ export default function AddStudentForm({ showForm }: { showForm: boolean }) {
 			name: formData.name,
 			grade_level: gradeValue,
 			mastery_scores: {},
+			mastery_history: {},
 			interests: formData.interests.split(',').map((interest) => interest.trim()),
 		};
 
@@ -47,9 +48,10 @@ export default function AddStudentForm({ showForm }: { showForm: boolean }) {
 			console.error('Error adding student:', err);
 		}
 	};
+	if (!showForm) return null;
 
 	return (
-		<div className={`${showForm ? '' : 'hidden'} w-full h-full mb-6 rounded-2xl border-2 border-border p-2`}>
+		<div className={`w-full h-full mb-6 rounded-2xl border-2 border-border p-2`}>
 			<form
 				onSubmit={(e) => handleSubmit(e)}
 				className='flex flex-col'>

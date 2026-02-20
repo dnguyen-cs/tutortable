@@ -48,6 +48,7 @@ class StudentCreate(StudentBase):
 
 class StudentRead(StudentBase):
     id: int
+    date_created: datetime
     sessions: List[SessionRead] = []
     exam_results: List[ExamResultRead] = []
 

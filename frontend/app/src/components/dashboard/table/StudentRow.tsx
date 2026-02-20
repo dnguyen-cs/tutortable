@@ -19,7 +19,7 @@ export default function StudentRow({ student }: { student: Student }) {
 	return (
 		<tr
 			onClick={() => router.push(`/student/${student.id}`)}
-			className='bg-card hover:bg-secondary/15 cursor-pointer'>
+			className='bg-card hover:bg-secondary/15 cursor-pointer animate-slide-in-bottom'>
 			<td className='p-4 align-top'>
 				<div className='flex flex-col'>
 					{isEditing ?

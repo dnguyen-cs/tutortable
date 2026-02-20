@@ -14,6 +14,7 @@ class Student(Base):
     mastery_scores = Column(JSON, default=dict) # Mastery Scores | {"Fractions": 0.8, "Decimals": 0.6}
     mastery_history = Column(JSON, default=dict)
     interests = Column(JSON, default=list) # Interests | ["Gaming", "Sports", "Music"]
+    date_created = Column(DateTime, default=datetime.now)
 
     sessions = relationship("Session", back_populates="student") 
     exam_results = relationship("ExamResult", back_populates="student")
