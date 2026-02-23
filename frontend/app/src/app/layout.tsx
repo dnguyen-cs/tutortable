@@ -19,7 +19,7 @@ export default function RootLayout({
 			<body className={`${fira_code.className} antialiased`}>
 				<Header />
 				<Sidebar />
-				<main className='md:ml-16 lg:ml-64'>{children}</main>
+				<main className='md:ml-16 lg:ml-64 h-full'>{children}</main>
 			</body>
 		</html>
 	);

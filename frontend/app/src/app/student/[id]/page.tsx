@@ -33,9 +33,9 @@ export default function StudentDashboard({ params }: { params: Promise<{ id: str
 	if (!student) return <div className='container text-text-secondary'>Loading...</div>;
 
 	return (
-		<div className='flex animate-fade-in'>
+		<div className='flex h-full overflow-hidden animate-fade-in'>
 			<main className='flex-1 max-w-7xl mx-auto p-4 md:p-10 space-y-10'>
-				<Header student={student}/>
+				<Header student={student} />
 				<MasteryHistory student={student} />
 				<div className='grid grid-cols-3 gap-8'>
 					{/* EXAM RESULTS */}
@@ -79,7 +79,9 @@ function RecentPerformance({ student }: { student: Student }) {
 	);
 }
 
+// TODO Implement real data
 function RecentSessions({ studentId }: { studentId: number }) {
+	return null;
 	return (
 		<div className='bg-primary/5 rounded-4xl border border-primary/10 p-6 flex-1'>
 			<h3 className='text-sm font-bold text-primary uppercase mb-4 flex items-center gap-2'>

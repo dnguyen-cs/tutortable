@@ -2,10 +2,12 @@
 import { useState } from 'react';
 import { GraduationCap, Sparkles } from 'lucide-react';
 import { Student } from '@/types/student';
-import GenerateQuestionsPanel from './GenerateQuestionsPanel';
+import GenerateQuestionsPanel from '@/components/AI_components/GenerateQuestionsPanel';
+import GenerateExamPanel from '@/components/AI_components/GenerateExamPanel';
 
 export default function Header({ student }: { student: Student }) {
 	const [showPanel, setShowPanel] = useState(false);
+	const topicsLength = Object.keys(student.mastery_history).length;
 
 	return (
 		<>
@@ -29,18 +31,26 @@ export default function Header({ student }: { student: Student }) {
 					</div>
 					<button
 						onClick={() => setShowPanel(true)}
-						className='flex items-center gap-3 bg-primary text-white p-4 rounded-2xl shadow-xl shadow-primary/30'>
+						className={
+							'flex items-center gap-3 bg-primary text-white p-4 rounded-2xl shadow-xl shadow-primary/30'
+						}>
 						<Sparkles size={20} />
-						Generate Questions
+						{`${topicsLength > 0 ? 'Generate Questions' : 'Generate Exam'}`}
 					</button>
 				</div>
 			</header>
-			{showPanel && (
+			{showPanel && topicsLength > 0 ?
 				<GenerateQuestionsPanel
 					student={student}
 					onClose={() => setShowPanel(false)}
 				/>
-			)}
+			:	showPanel && (
+					<GenerateExamPanel
+						student={student}
+						onClose={() => setShowPanel(false)}
+					/>
+				)
+			}
 		</>
 	);
 }
