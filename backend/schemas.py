@@ -2,6 +2,12 @@ from pydantic import BaseModel
 from typing import List, Optional, Dict, Any
 from datetime import datetime
 
+class ExamRequest(BaseModel):
+    student_id: int
+    grade_level: int
+    topics: List[str]
+    interests: List[str]
+
 class ExamResultBase(BaseModel):
     exam_type: str
     total_score: float
@@ -18,6 +24,7 @@ class ExamResultRead(ExamResultBase):
 
     class Config:
         from_attributes = True
+
 
 class SessionBase(BaseModel):
     topics_covered: List[str] = []

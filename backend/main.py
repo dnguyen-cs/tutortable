@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from db import engine
 import models
-from routers import students, sessions
+from routers import students, sessions, ai
 
 app = FastAPI(title="TutorTable API", version="1.0.0")
 
@@ -19,6 +19,7 @@ app.add_middleware(
 models.Base.metadata.create_all(bind=engine)
 app.include_router(students.router)
 app.include_router(sessions.router)
+app.include_router(ai.router)
 @app.get("/api/health/")
 def health_check():
     return {"status": "OK", "timestamp" : __import__('datetime').datetime.now().isoformat()}

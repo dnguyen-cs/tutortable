@@ -16,8 +16,9 @@ class Student(Base):
     interests = Column(JSON, default=list) # Interests | ["Gaming", "Sports", "Music"]
     date_created = Column(DateTime, default=datetime.now)
 
-    sessions = relationship("Session", back_populates="student") 
+    sessions = relationship("Session", back_populates="student")
     exam_results = relationship("ExamResult", back_populates="student")
+    diagnostic_exams = relationship("DiagnosticExam", back_populates="student")
 
 class Session(Base):
     __tablename__ = "sessions"
@@ -45,3 +46,15 @@ class ExamResult(Base):
     question_data = Column(JSON, default=list) # [{"question_id": 1, "is_correct": False}, {"question_id": 2, "is_correct": True}]
 
     student = relationship("Student", back_populates="exam_results")
+
+class DiagnosticExam(Base):
+    __tablename__ = "diagnostic_exams"
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"), nullable=False)
+    status = Column(String, default="processing")
+    content = Column(Text, nullable=True)
+    metadata_snapshot = Column(JSON)
+    date_created = Column(DateTime, default=datetime.now)
+
+    student = relationship("Student", back_populates="diagnostic_exams")

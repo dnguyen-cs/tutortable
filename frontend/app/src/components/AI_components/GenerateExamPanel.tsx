@@ -1,18 +1,21 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { X, Sparkles, ChevronDown, ChevronRight, GraduationCap } from 'lucide-react';
 import { Student } from '@/types/student';
 import { TOPICS, Topic } from '@/lib/topics';
 import CustomTopicInput from './CustomTopicInput';
 import { useDraggablePanel } from '@/hooks/useDraggablePanel';
 
+const apiURL = process.env.NEXT_PUBLIC_API_URL;
 interface GenerateExamPanelProps {
 	student: Student;
 	onClose: () => void;
 }
 
 export default function GenerateExamPanel({ student, onClose }: GenerateExamPanelProps) {
-	{/* Disable Global Scrollbar */}
+	// Disable Global Scrollbar
+	const router = useRouter();
 	useEffect(() => {
 		document.body.style.overflow = 'hidden';
 		return () => {
@@ -24,6 +27,7 @@ export default function GenerateExamPanel({ student, onClose }: GenerateExamPane
 	const [expandedTopics, setExpandedTopics] = useState<Set<string>>(new Set());
 	const [selectedSubTopics, setSelectedSubTopics] = useState<Set<string>>(new Set());
 	const [customTopics, setCustomTopics] = useState<string[]>([]);
+	const [generating, setGenerating] = useState(false);
 
 	const toggleExpand = (topicId: string) => {
 		setExpandedTopics((prev) => {
@@ -61,15 +65,33 @@ export default function GenerateExamPanel({ student, onClose }: GenerateExamPane
 
 	const selectedCount = selectedSubTopics.size + customTopics.length;
 
-	const handleGenerate = () => {
+	const handleGenerate = async () => {
 		if (selectedCount === 0) return;
 		const config = {
-			student: student.id,
-			gradeLevel: student.grade_level,
+			student_id: student.id,
+			grade_level: student.grade_level,
 			topics: [...Array.from(selectedSubTopics), ...customTopics],
+			interests: student.interests,
 		};
-		console.log('Generate exam:', config);
-		// TODO: call API
+		try {
+			const res = await fetch(`${apiURL}/ai/diagnostic`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(config),
+			});
+
+			if (!res.ok) throw new Error('Failed to generate exam');
+			setGenerating(true);
+			const data = await res.json();
+			setGenerating(false);
+
+			const redirectURL = `/student/${student.id}/exam?id=${data.id}&type=${data.type}&taken=${data.taken}`;
+			router.push(redirectURL);
+		} catch (error) {
+			console.error('API error:', error);
+		}
 	};
 
 	return (
@@ -85,6 +107,8 @@ export default function GenerateExamPanel({ student, onClose }: GenerateExamPane
 				className='fixed top-0 right-0 h-full bg-card border-l-2 border-border z-50 flex flex-col shadow-2xl animate-slide-in-right'
 				style={{ width }}>
 				{/* Drag handle */}
+				{/* TODO: Implement 'generating' toast or alert */}
+				<h1 className={generating ? "" : "hidden"}>***GENERATING***</h1>
 				<div
 					onMouseDown={onDragHandleMouseDown}
 					className='absolute left-0 top-0 h-full w-1.5 cursor-ew-resize hover:bg-primary/30 active:bg-primary/50 transition-colors z-10'

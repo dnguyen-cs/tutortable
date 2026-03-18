@@ -1,4 +1,4 @@
-prompts = {
+prompt_list = {
     "practice_questions":
         """
         You are an expert tutor and curriculum designer. Your task is to generate a highly targeted practice assignment for a student based on the provided parameters. 
@@ -22,7 +22,7 @@ prompts = {
         Generate the entire assignment in valid, compilable LaTeX code. Use standard packages (e.g., amsmath, geometry). Do not include any conversational text, explanations, or markdown formatting outside of the LaTeX code. Begin directly with \documentclass. Include an answer key at the very end of the document on a new page.
         """
     ,
-    "new_exam" :
+    "diagnostic" :
         """
         You are an expert educational diagnostician. Your task is to generate a baseline diagnostic exam for a new student to assess their current proficiency across specified subjects.
 
@@ -43,7 +43,7 @@ prompts = {
     ,
     "recurring_exam" : 
         """
-        You are an expert psychometrician and academic assessor. Your task is to generate a recurring milestone exam designed to measure growth and challenge the student's expanding capabilities.
+        You are an expert academic assessor. Your task is to generate a recurring milestone exam designed to measure growth and challenge the student's expanding capabilities.
 
         INPUT PARAMETERS:
         - Grade Level: <GRADE_LEVEL>
